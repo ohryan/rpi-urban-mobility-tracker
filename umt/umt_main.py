@@ -136,11 +136,10 @@ def main():
                     cv2.waitKey(1)
                     
                 # persist frames
-                if args.save_frames: 
-			cv2.imwrite(f'output/frame_{i}.jpg', cv2_img)
+                if args.save_frames: cv2.imwrite(f'output/frame_{i}.jpg', cv2_img)
 		
-		# write to file every frame.
-		out_file.flush()
+            # write to file every frame.
+            out_file.flush()
                 
     cv2.destroyAllWindows()         
     pass
