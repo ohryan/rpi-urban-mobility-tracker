@@ -54,7 +54,7 @@ def main():
     print('> INITIALIZING UMT...')
     print('   > THRESHOLD:',args.threshold)
 
-	# parse label map
+    # parse label map
     labels = parse_label_map(args, DEFAULT_LABEL_MAP_PATH)
     
     # initialize detector
@@ -63,7 +63,7 @@ def main():
     # create output directory
     if not os.path.exists('output') and args.save_frames: os.makedirs('output')
  
- 	# initialize deep sort tracker   
+     # initialize deep sort tracker   
     metric = nn_matching.NearestNeighborDistanceMetric("cosine", MAX_COSINE_DIST, NN_BUDGET)
     tracker = Tracker(metric) 
 
@@ -83,14 +83,14 @@ def main():
             
             # add header to trajectory file
             if i == 0:
-            	header = (f'frame_num,rpi_time,obj_class,obj_id,obj_age,'
-            	    'obj_t_since_last_update,obj_hits,'
-            	    'xmin,ymin,xmax,ymax')
-            	print(header, file=out_file)
+                header = (f'frame_num,rpi_time,obj_class,obj_id,obj_age,'
+                    'obj_t_since_last_update,obj_hits,'
+                    'xmin,ymin,xmax,ymax')
+                print(header, file=out_file)
 
             # get detections
             detections = generate_detections(pil_img, interpreter, args.threshold)
-			
+            
             # proceed to updating state
             if len(detections) == 0: print('   > no detections...')
             else:
@@ -114,10 +114,10 @@ def main():
             # only for live display
             if args.live_view or args.save_frames:
             
-            	# convert pil image to cv2
+                # convert pil image to cv2
                 cv2_img = cv2.cvtColor(np.array(pil_img), cv2.COLOR_RGB2BGR)
             
-            	# cycle through actively tracked objects
+                # cycle through actively tracked objects
                 for track in tracker.tracks:
                     if not track.is_confirmed() or track.time_since_update > 1:
                         continue
@@ -137,7 +137,7 @@ def main():
                     
                 # persist frames
                 if args.save_frames: cv2.imwrite(f'output/frame_{i}.jpg', cv2_img)
-		
+        
             # write to file every frame.
             out_file.flush()
                 
